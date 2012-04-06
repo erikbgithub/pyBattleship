@@ -3,16 +3,15 @@
 from constants import *
 
 class Referee:
-
     def __init__(self):
         pass
 
-    def evaluate(self,move,game): 
+    def evaluate(self, move, game):
         if game.board[move] == game.sym_empty:
             return STATE_MISS
         elif game.board[move] in [game.sym_hit, game.sym_miss]:
             return STATE_OLD
-        
+
         if move == False:
             return STATE_ILLEGAL
 
