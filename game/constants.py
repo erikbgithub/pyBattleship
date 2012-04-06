@@ -2,34 +2,40 @@
 BOARD_SIZE = 10 #both width end height, default=squared board
 DEFAULT_SHIPS = [5, 4, 3, 3, 2]
 
-#symbols
-SYM_EMPTY = ' .'
-SYM_HIT = ' *'
-SYM_MISS = ' ~'
-SYM_UNKNOWN = ' ='
+# all constants can be used as bit mask, could be usefull sometimes
 
-#states
-STATE_START = 'STATE_START'
-STATE_ILLEGAL = 'STATE_ILLEGAL'
-STATE_UNCERTAIN = 'STATE_UNCERTAIN'
-STATE_OLD = 'STATE_OLD'
-STATE_EMPTY = 'STATE_EMPTY'
-STATE_HIT = 'STATE_HIT'
-STATE_DESTROYED = 'STATE_DESTROYED'
-STATE_MISS = 'STATE_MISS'
-STATE_WIN = 'STATE_WIN'
+class FIELD:
+    EMPTY = 1
+    SHIP = 2
+    MISS = 4
+    HIT = 8
+    DESTROYED = 16
+    UNKNOWN = 32
 
-#directions
-DIR_UP = 'DIR_UP'
-DIR_DOWN = 'DIR_DOWN'
-DIR_LEFT = 'DIR_LEFT'
-DIR_RIGHT = 'DIR_RIGHT'
 
-#translations
-TRANSLATE_STATE_SYM = {
-    STATE_EMPTY: lambda game: game.sym_empty,
-    STATE_HIT: lambda game: game.sym_hit,
-    STATE_WIN: lambda game: game.sym_hit,
-    STATE_DESTROYED: lambda game: game.sym_hit,
-    STATE_MISS: lambda game: game.sym_miss
+class STATE:
+    START = 1
+    ILLEGAL = 2
+    UNCERTAIN = 4
+    OLD = 8
+    WIN = 16
+
+    #todo: print state
+
+
+class DIR:
+    #directions
+    UP = 1
+    DOWN = 2
+    LEFT = 4
+    RIGHT = 8
+
+
+symbols = {
+    FIELD.EMPTY: '.',
+    FIELD.SHIP: "+",
+    FIELD.MISS: '~',
+    FIELD.HIT: '*',
+    FIELD.DESTROYED: "*",
+    FIELD.UNKNOWN: '?'
 }

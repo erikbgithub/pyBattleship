@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
-#imports
-from constants import *
 
-class Referee:
+from Board import Board
+
+class Game:
     def __init__(self):
-        pass
+        self.board = Board()
+
 
     def evaluate(self, move, game):
         if game.board[move] == game.sym_empty:
