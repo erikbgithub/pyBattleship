@@ -3,7 +3,7 @@
 from copy import copy
 from operator import add, sub
 
-from constants import BOARD_SIZE, DEFAULT_SHIPS, STATE, FIELD, DIR, symbols
+from constants import BOARD_SIZE, DEFAULT_SHIPS, FIELD, DIR, symbols
 
 class Board:
     """
@@ -11,20 +11,24 @@ class Board:
     """
 
     def __init__(self, width=BOARD_SIZE, height=BOARD_SIZE, start_ships=DEFAULT_SHIPS):
-        self.state = STATE.START
         self.turn = 0
         self.width = width
         self.height = height
 
-        self.free_ships = copy(start_ships)
+        self.board = []
+        self.start_ships = copy(start_ships)
+
+    def reset(self):
+        """ reset and init the game field """
+
+        self.free_ships = copy(self.start_ships)
 
         # one dimensional array for whole board
         # pos = row * width + column
-        self.field = [FIELD.EMPTY for n in xrange(width * height)]
+        self.field = [FIELD.EMPTY] * (self.width * self.height)
 
         # maps ship id to positions
         self.ships = {}
-
 
     def add_ship(self, ship, x, y, dir):
         if ship not in self.free_ships:
@@ -35,7 +39,6 @@ class Board:
         # vertical
         if dir in (DIR.RIGHT, DIR.LEFT):
             # check if ship fits onto board
-
             if not(0 <= x < self.width > op(x, ship) >= 0):
                 return False
 
@@ -61,6 +64,28 @@ class Board:
 
         return True
 
+    def is_destroyed(self, x, y):
+        pos = y * self.width + x
+
+        # TODO optimize
+        for ship in self.ships.itervalues():
+            if pos in ship:
+                if all(True for p in ship if p == FIELD.HIT):
+                    for p in ship:
+                        self.field[p] = FIELD.DESTROYED
+                    return True
+
+        return False
+
+    def get_field(self, x, y):
+        return self.field[y * self.width + x]
+
+    def set_field(self, x, y, state):
+        self.field[y * self.width + x] = state
+
+    def get_board(self):
+        return self.field
+
     def get_col(self, pos):
         return pos // self.width
 
@@ -80,6 +105,7 @@ class Board:
 
 if __name__ == "__main__":
     b = Board()
+    b.reset()
 
     print b
 

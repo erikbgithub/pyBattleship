@@ -13,14 +13,10 @@ class FIELD:
     UNKNOWN = 32
 
 
-class STATE:
-    START = 1
-    ILLEGAL = 2
-    UNCERTAIN = 4
-    OLD = 8
-    WIN = 16
-
-    #todo: print state
+class MOVE:
+    ILLEGAL = 1
+    OLD = 2
+    OK = 4
 
 
 class DIR:
