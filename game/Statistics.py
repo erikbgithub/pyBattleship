@@ -15,7 +15,7 @@ class Statistics:
         self.results = []
 
     def run(self, n=GAME_CT):
-        for i in range(GAME_CT):
+        for i in range(n):
             t = time()
             self.game.prepare()
             self.game.play()

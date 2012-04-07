@@ -13,6 +13,6 @@ if __name__ == "__main__":
     g = Game()
     s = Statistics(g)
 
-    s.run(100)
+    s.run(5000)
 
     print s
