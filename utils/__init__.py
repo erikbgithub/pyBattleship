@@ -5,6 +5,14 @@ def bits_set(mask, bin):
     return (bin & mask) == mask
 
 
+def avg(seq):
+    return float(sum(seq)) / len(seq)
+
+
+def mean(seq):
+    return sorted(seq)[len(seq) / 2]
+
+
 def make_mem_equal():
     def inner(a, b, cache=[None]):
         last = cache[0] if cache[0] is not None else a

@@ -7,7 +7,7 @@ from game.constants import MOVE
 from AbstractStrategy import AbstractStrategy
 
 class RandomStrategy(AbstractStrategy):
-    def start(self):
+    def prepare(self):
         self.positions = [(x, y) for x in xrange(self.game.width) for y in xrange(self.game.height)]
 
     def get_move(self):

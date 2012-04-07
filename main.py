@@ -4,15 +4,15 @@
 import argparse
 
 from game.Game import Game
+from game.Statistics import Statistics
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Python battleship simulator")
     parser.parse_args()
 
     g = Game()
-    g.prepare()
-    print g
-    print
+    s = Statistics(g)
 
-    g.play()
-    print g
+    s.run(100)
+
+    print s

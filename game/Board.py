@@ -70,7 +70,7 @@ class Board:
         # TODO optimize
         for ship in self.ships.itervalues():
             if pos in ship:
-                if all(True for p in ship if p == FIELD.HIT):
+                if all(True if self.field[p] == FIELD.HIT else False for p in ship):
                     for p in ship:
                         self.field[p] = FIELD.DESTROYED
                     return True

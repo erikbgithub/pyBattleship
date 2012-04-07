@@ -19,13 +19,30 @@ class MOVE:
     OK = 4
 
 
+class STATE:
+    STARTING = 1
+    PLAYING = 2
+    WON = 4
+    INVALID = 8
+
+    @staticmethod
+    def name(state):
+        if state == STATE.STARTING:
+            return "STARTING"
+        elif state == STATE.PLAYING:
+            return "PLAYING"
+        elif state == STATE.WON:
+            return "WON"
+        else:
+            return "INVALID"
+
+
 class DIR:
     #directions
     UP = 1
     DOWN = 2
     LEFT = 4
     RIGHT = 8
-
 
 symbols = {
     FIELD.EMPTY: '.',

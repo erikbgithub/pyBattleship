@@ -8,7 +8,7 @@ class AbstractStrategy(object):
     def __init__(self, game):
         self.game = game
 
-    def start(self):
+    def prepare(self):
         pass
 
     def get_move(self):

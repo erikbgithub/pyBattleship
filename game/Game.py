@@ -5,7 +5,7 @@ from traceback import print_exc
 from distributors.RandomDistributor import RandomDistributor
 from strategies.RandomStrategy import RandomStrategy
 
-from constants import FIELD, MOVE, BOARD_SIZE, DEFAULT_SHIPS
+from constants import STATE, FIELD, MOVE, BOARD_SIZE, DEFAULT_SHIPS
 from Board import Board
 
 #TODO: board size, ship count
@@ -13,6 +13,7 @@ class Game:
     def __init__(self, distributor=RandomDistributor, strategy=RandomStrategy,
                  width=BOARD_SIZE, height=BOARD_SIZE, start_ships=DEFAULT_SHIPS):
         self.board = Board(width, height, start_ships)
+        self.state = STATE.STARTING
         self.width = width
         self.height = height
 
@@ -27,20 +28,29 @@ class Game:
 
 
     def prepare(self):
+        self.state = STATE.STARTING
         self.board.reset()
         del self.moves[:]
 
         self.dist.set_ships(self.board)
-        self.player.start()
+        self.player.prepare()
         self.destroyed = 0
 
 
     def play(self):
+        self.state = STATE.PLAYING
         while True:
             self.on_turn = True
-            self.player.get_move()
 
-            if self.destroyed == len(self.board.ships):
+            try:
+                self.player.get_move()
+            except:
+                self.state = STATE.INVALID
+                print_exc()
+                return
+
+            if self.destroyed == len(self.board.start_ships):
+                self.state = STATE.WON
                 return
 
 
@@ -49,6 +59,7 @@ class Game:
 
     def illegal_move(self):
         if self.strikes > 5:
+            self.state = STATE.INVALID
             raise Exception("Player disqualified")
 
         self.strikes += 1
@@ -67,6 +78,7 @@ class Game:
                 return MOVE.OLD, field
 
             self.moves.append((x, y))
+            self.on_turn = False
 
             if field == FIELD.EMPTY:
                 self.board.set_field(x, y, FIELD.MISS)
@@ -84,13 +96,16 @@ class Game:
             else: # should not happen
                 return MOVE.OLD, field
 
-        except BaseException, e:
+        except:
             print_exc()
             return self.illegal_move()
 
 
+    def get_name(self):
+        return "%s vs. %s" % (self.dist.__class__.__name__, self.player.__class__.__name__)
+
     def __str__(self):
-        s = "\t%s vs. %s" % (self.dist.__class__.__name__, self.player.__class__.__name__)
+        s = "\t" + self.get_name()
         s += "\n" + self.board.__str__()
-        s += "\n\tturns: %s" % self.turn_count()
+        s += "\n\tturns: %s | state: %s" % (self.turn_count(), STATE.name(self.state))
         return s
