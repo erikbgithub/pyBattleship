@@ -7,6 +7,13 @@ from game.constants import DIR
 from AbstractDistributor import AbstractDistributor
 
 class RandomDistributor(AbstractDistributor):
+    """
+    This distributor simply puts boats on random positions.
+    Thus it delivers a basic framework for ship deployment
+    and a testing ground for solvers that don't use specific
+    knowledge about their oponents.
+    """
+    
     def set_ships(self, board):
         directions = [DIR.UP, DIR.DOWN, DIR.LEFT, DIR.RIGHT]
         positions = [(x, y) for x in xrange(board.width) for y in xrange(board.height)]
