@@ -104,6 +104,10 @@ class Game:
     def get_name(self):
         return "%s vs. %s" % (self.dist.__class__.__name__, self.player.__class__.__name__)
 
+    def get_game_info(self):
+        return "Board: %sx%s | Ships: %s | Sum: %s" % (
+        self.width, self.height, self.board.start_ships, sum(self.board.start_ships))
+
     def __str__(self):
         s = "\t" + self.get_name()
         s += "\n" + self.board.__str__()
