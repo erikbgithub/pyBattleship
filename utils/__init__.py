@@ -9,5 +9,5 @@ def avg(seq):
     return round(float(sum(seq)) / len(seq), 2)
 
 
-def mean(seq):
+def median(seq):
     return sorted(seq)[len(seq) / 2]
