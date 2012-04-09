@@ -7,7 +7,7 @@ from constants import BOARD_SIZE, DEFAULT_SHIPS, FIELD, DIR, symbols
 
 class Board:
     """
-    Represents a single board, has to be filled by distributor and then played by strategy.
+    Represents a single board, has to be filled by a Distributor and then played by a Strategy.
     """
 
     def __init__(self, width=BOARD_SIZE, height=BOARD_SIZE, start_ships=DEFAULT_SHIPS):
@@ -19,15 +19,15 @@ class Board:
         self.start_ships = copy(start_ships)
 
     def reset(self):
-        """ reset and init the game field """
+        """ initialises the game field """
 
         self.free_ships = copy(self.start_ships)
 
-        # one dimensional array for whole board
+        # one dimensional array for the whole board
         # pos = row * width + column
         self.field = [FIELD.EMPTY] * (self.width * self.height)
 
-        # maps ship id to positions
+        # maps ship-ids to positions
         self.ships = {}
 
     def add_ship(self, ship, x, y, dir):
@@ -55,7 +55,7 @@ class Board:
         if any(True for p in pos if self.field[p] != FIELD.EMPTY):
             return False
 
-        # ship has a legal position, so add to board
+        # ship has a legal position, thus add to board
         for p in pos:
             self.field[p] = FIELD.SHIP
 
