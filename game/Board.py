@@ -86,10 +86,10 @@ class Board:
     def get_board(self):
         return self.field
 
-    def get_col(self, pos):
+    def get_col(pos):
         return pos // self.width
 
-    def get_row(self, pos):
+    def get_row(pos):
         return pos % self.width
 
     def print_board(self):
