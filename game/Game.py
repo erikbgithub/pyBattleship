@@ -10,7 +10,7 @@ from Board import Board
 
 #TODO: board size, ship count
 class Game:
-    '''TODO: description'''
+    """TODO: description"""
 
     def __init__(self, distributor=RandomDistributor, strategy=RandomStrategy,
                  width=BOARD_SIZE, height=BOARD_SIZE, start_ships=DEFAULT_SHIPS):
@@ -68,7 +68,7 @@ class Game:
         return MOVE.ILLEGAL, FIELD.UNKNOWN
 
     def evaluate(self, x, y):
-        """  return Mpve, Field  """
+        """  return Move, Field  """
 
         if not self.on_turn:
             return self.illegal_move()
