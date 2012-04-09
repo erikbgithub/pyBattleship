@@ -10,6 +10,8 @@ from Board import Board
 
 #TODO: board size, ship count
 class Game:
+    '''TODO: description'''
+    
     def __init__(self, distributor=RandomDistributor, strategy=RandomStrategy,
                  width=BOARD_SIZE, height=BOARD_SIZE, start_ships=DEFAULT_SHIPS):
         self.board = Board(width, height, start_ships)
