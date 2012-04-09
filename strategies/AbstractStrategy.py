@@ -5,14 +5,21 @@ class AbstractStrategy(object):
     Abstract class for all strategy algorithm. They supposed to play the game and sank opponents ships.
     """
 
-    def __init__(self, game):
-        self.game = game
+    def __init__(self, width, height, evaluate):
+        self.width = width
+        self.height = height
+        self.evaluate = evaluate
 
     def prepare(self):
         pass
 
-    def get_move(self):
-        """ Will be called  by the game, an move has to be made in this method. """
+    def get_move(self, state, last_result):
+        """ Will be called  by the game, an move has to be made in this method. 
+        :param state: the current Game state
+        :param last_result: a tuple of a move-evaluation and a field-type, 
+                            both of the field last shot at;
+                            allows to check what happened last move
+        """
         raise NotImplementedError
 
     def evaluate(self, x, y):
@@ -21,6 +28,6 @@ class AbstractStrategy(object):
 
         :param x:  x coordinate
         :param y:  y coordinate
-        :return: Tuple of (Move, Field) state
+        :return: boolean
         """
-        return self.game.evaluate(x, y)
+        return self.evaluate(x, y)

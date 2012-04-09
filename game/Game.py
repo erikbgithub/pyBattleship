@@ -20,7 +20,7 @@ class Game:
         self.height = height
 
         self.dist = distributor()
-        self.player = strategy(self)
+        self.player = strategy(self.width,self.height,self.is_legal)
         self.moves = []
 
         # number of invalid moves
@@ -41,11 +41,13 @@ class Game:
 
     def play(self):
         self.state = STATE.PLAYING
+        last_result = None
         while True:
             self.on_turn = True
 
             try:
-                self.player.get_move()
+                x,y = self.player.get_move(self.state,last_result)
+                last_result = self.evaluate(x,y)
             except:
                 self.state = STATE.INVALID
                 print_exc()
@@ -67,6 +69,10 @@ class Game:
         self.strikes += 1
         return MOVE.ILLEGAL, FIELD.UNKNOWN
 
+    def is_legal(self, x, y):
+        return 0 <= x < self.width and 0 <= y < self.height
+
+    #TODO find better name for this method or for AbstractStrategy.evaluate()
     def evaluate(self, x, y):
         """  return Move, Field  """
 

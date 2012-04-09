@@ -8,14 +8,17 @@ from AbstractStrategy import AbstractStrategy
 
 class RandomStrategy(AbstractStrategy):
     def prepare(self):
-        self.positions = [(x, y) for x in xrange(self.game.width) for y in xrange(self.game.height)]
+        self.positions = [(x, y) for x in xrange(self.width) for y in xrange(self.height)]
 
-    def get_move(self):
-        x, y = choice(self.positions)
+    def get_move(self,state,last_result):
+        """
+        creates the next move. in RandomStrategy it is simply one randomly chosen field.
+        """
 
         while True:
-            move, field = self.evaluate(x, y)
-            if move in (MOVE.OK, MOVE.OLD):
+            x, y = choice(self.positions)
+            if self.evaluate(x,y):
                 self.positions.remove((x, y))
-                return
-
+                return (x,y)
+            else:
+                print "eval failed for", (x,y)
