@@ -11,7 +11,7 @@ from Board import Board
 #TODO: board size, ship count
 class Game:
     '''TODO: description'''
-    
+
     def __init__(self, distributor=RandomDistributor, strategy=RandomStrategy,
                  width=BOARD_SIZE, height=BOARD_SIZE, start_ships=DEFAULT_SHIPS):
         self.board = Board(width, height, start_ships)
@@ -108,10 +108,10 @@ class Game:
 
     def get_game_info(self):
         return "Board: %sx%s | Ships: %s | Sum: %s" % (
-        self.width, self.height, self.board.start_ships, sum(self.board.start_ships))
+            self.width, self.height, self.board.start_ships, sum(self.board.start_ships))
 
     def __str__(self):
-        s = "\t" + self.get_name()
+        s = "\t%s\n\t%s" % (self.get_name(), self.get_game_info())
         s += "\n" + self.board.__str__()
         s += "\n\tturns: %s | state: %s" % (self.turn_count(), STATE.name(self.state))
         return s

@@ -29,6 +29,8 @@ if __name__ == "__main__":
         help='Strategy to set ships on the board')
     parser.add_argument('-s', '--strategy', choices=strategies.all, default=strategies.all[0],
         help='Strategy to shoot ships')
+    parser.add_argument('--print-game', default=False, action='store_true',
+        help='Play one Game and print the board')
     parser.add_argument('--no-multi-process', default=False, action='store_true',
         help='Disable multiprocessing on all cores')
 
@@ -43,16 +45,22 @@ if __name__ == "__main__":
     strategy = getattr(strategy, args.strategy)
 
     g = Game(dist, strategy, args.width, args.height, args.ships)
-    s = Statistics(g)
 
-    t = time()
-
-    if not args.no_multi_process:
-        s.spawn(args.count)
+    if args.print_game:
+        g.prepare()
+        g.play()
+        print g
     else:
-        s.run(args.count)
+        s = Statistics(g)
 
-    print s
+        t = time()
 
-    print
-    print "Testing took %.2f seconds" % (time() - t)
+        if not args.no_multi_process:
+            s.spawn(args.count)
+        else:
+            s.run(args.count)
+
+        print s
+
+        print
+        print "Testing took %.2f seconds" % (time() - t)
