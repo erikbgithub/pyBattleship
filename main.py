@@ -73,13 +73,16 @@ if __name__ == "__main__":
         print s
 
         if args.plot_results:
-            from numpy import zeros
-            import matplotlib.pyplot as plt
+            try:
+                from numpy import zeros
+                import matplotlib.pyplot as plt
 
-            data = zeros(101)
-            for x in s.results: data[x[1]] += 1
-            plt.plot(data)
-            plt.show()
+                data = zeros(101)
+                for x in s.results: data[x[1]] += 1
+                plt.plot(data)
+                plt.show()
+            except:
+                print "couldn't plot. Modules numpy and matplotlib not found"
 
         print
         print "Testing took %.2f seconds" % (time() - t)

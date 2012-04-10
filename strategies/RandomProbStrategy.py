@@ -8,7 +8,7 @@ from AbstractStrategy import AbstractStrategy
 
 N = 10000
 
-class ProbabilityStrategy(AbstractStrategy):
+class RandomProbStrategy(AbstractStrategy):
     """
     The main strategy is to have a map as big as the gameboard and set each
     field to value relative to it's likelyhood of containing a ship.
@@ -17,8 +17,8 @@ class ProbabilityStrategy(AbstractStrategy):
     """
 
     def prepare(self):
-        self.probability_map = [1] * (self.game.width * self.game.height)
-        self.action_map = [FIELD.UNKNOWN] * (self.game.width * self.game.height)
+        self.probability_map = [1] * (self.width * self.height)
+        self.action_map = [FIELD.UNKNOWN] * (self.width * self.height)
 
     def get_move(self):
         #move
@@ -29,8 +29,8 @@ class ProbabilityStrategy(AbstractStrategy):
             del max_pos[pos]
             pos = choice(max_pos)
 
-        x = pos // self.game.width
-        y = pos % self.game.width
+        x = pos // self.width
+        y = pos % self.width
 
         move, field = self.evaluate(x, y)
         #update local state
