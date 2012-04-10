@@ -33,6 +33,8 @@ if __name__ == "__main__":
         help='Play one Game and print the board')
     parser.add_argument('--animate-game', default=False, action='store_true',
         help='Play one Game and animate it')
+    parser.add_argument('--plot-results', default=False, action='store_true',
+        help='Plot the results with numpy')
     parser.add_argument('--no-multi-process', default=False, action='store_true',
         help='Disable multiprocessing on all cores')
 
@@ -67,6 +69,15 @@ if __name__ == "__main__":
             s.spawn(args.count)
         else:
             s.run(args.count)
+
+        if args.plot_results:
+            from numpy import zeros
+            import matplotlib.pyplot as plt
+
+            data = zeros(101)
+            for x in s.results: data[x[1]] += 1
+            plt.plot(data)
+            plt.show()
 
         print s
 
