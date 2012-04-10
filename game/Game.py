@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+import os
+from time import sleep
 from traceback import print_exc
 
 from distributors.RandomDistributor import RandomDistributor
@@ -39,7 +41,15 @@ class Game:
         self.destroyed = 0
 
 
-    def play(self):
+    def play(self, animate=False):
+        # not all available ships were placed onto board
+        if self.board.free_ships:
+            self.state = STATE.INVALID
+            return
+
+        if animate:
+            os.system("clear")
+
         self.state = STATE.PLAYING
         while True:
             self.on_turn = True
@@ -50,6 +60,12 @@ class Game:
                 self.state = STATE.INVALID
                 print_exc()
                 return
+
+            if animate:
+                # set cursor to line 0
+                print "\033[0;0H"
+                print self
+                sleep(0.25)
 
             if self.destroyed == len(self.board.start_ships):
                 self.state = STATE.WON
@@ -102,6 +118,26 @@ class Game:
             print_exc()
             return self.illegal_move()
 
+    def get_field_info(self, x, y):
+        """  can be used by strategy to get info for a field, hides information for undetected fields"""
+
+        field = self.board.get_field(x, y)
+        if field in (FIELD.HIT, FIELD.DESTROYED, FIELD.MISS):
+            return field
+        else:
+            return FIELD.UNKNOWN
+
+    def animate(self):
+        os.system("clear")
+        self.board.reset()
+
+        for move in self.moves:
+            self.on_turn = True
+            self.evaluate(*move)
+            # set cursor to line 0
+            print "\033[0;0H"
+            print self
+            sleep(0.5)
 
     def get_name(self):
         return "%s vs. %s" % (self.dist.__class__.__name__, self.player.__class__.__name__)

@@ -25,12 +25,14 @@ if __name__ == "__main__":
     parser.add_argument('--height', metavar="HEIGHT", type=int, default=BOARD_SIZE,
         help="board height")
 
-    parser.add_argument('-d', '--distributor', choices=distributors.all, default=distributors.all[0],
+    parser.add_argument('-d', '--distributor', choices=distributors.all, default="RandomDistributor",
         help='Strategy to set ships on the board')
-    parser.add_argument('-s', '--strategy', choices=strategies.all, default=strategies.all[0],
+    parser.add_argument('-s', '--strategy', choices=strategies.all, default="RandomStrategy",
         help='Strategy to shoot ships')
     parser.add_argument('--print-game', default=False, action='store_true',
         help='Play one Game and print the board')
+    parser.add_argument('--animate-game', default=False, action='store_true',
+        help='Play one Game and animate it')
     parser.add_argument('--no-multi-process', default=False, action='store_true',
         help='Disable multiprocessing on all cores')
 
@@ -50,6 +52,12 @@ if __name__ == "__main__":
         g.prepare()
         g.play()
         print g
+    elif args.animate_game:
+        g.prepare()
+        try:
+            g.play(True)
+        except KeyboardInterrupt:
+            pass
     else:
         s = Statistics(g)
 
