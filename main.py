@@ -70,6 +70,8 @@ if __name__ == "__main__":
         else:
             s.run(args.count)
 
+        print s
+
         if args.plot_results:
             from numpy import zeros
             import matplotlib.pyplot as plt
@@ -78,8 +80,6 @@ if __name__ == "__main__":
             for x in s.results: data[x[1]] += 1
             plt.plot(data)
             plt.show()
-
-        print s
 
         print
         print "Testing took %.2f seconds" % (time() - t)

@@ -5,8 +5,17 @@ class AbstractStrategy(object):
     Abstract class for all strategy algorithm. They supposed to play the game and sank opponents ships.
     """
 
-    def __init__(self, game):
-        self.game = game
+    def __init__(self):
+        self.width = self.height = self.ships = None
+
+    def set_callbacks(self, ev, f, b):
+        self.evaluate = ev
+        self.get_field_info = f
+        self.get_board_info = b
+
+    def init(self):
+        self.width, self.height, self.ships = self.get_board_info()
+        self.prepare()
 
     def prepare(self):
         pass
@@ -23,4 +32,15 @@ class AbstractStrategy(object):
         :param y:  y coordinate
         :return: Tuple of (Move, Field) state
         """
-        return self.game.evaluate(x, y)
+
+    def get_field_info(self, x, y):
+        """ Retrieves information about field state at desired position
+
+        :return: :class:`Field`
+        """
+
+    def get_board_info(self):
+        """ Gets board information
+
+        :return: (width, height, start_ships)
+        """

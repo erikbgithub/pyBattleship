@@ -22,7 +22,7 @@ class Game:
         self.height = height
 
         self.dist = distributor()
-        self.player = strategy(self)
+        self.player = strategy()
         self.moves = []
 
         # number of invalid moves
@@ -37,7 +37,8 @@ class Game:
         del self.moves[:]
 
         self.dist.set_ships(self.board)
-        self.player.prepare()
+        self.player.set_callbacks(self.evaluate, self.get_field_info, self.get_board_info)
+        self.player.init()
         self.destroyed = 0
 
 
@@ -126,6 +127,9 @@ class Game:
             return field
         else:
             return FIELD.UNKNOWN
+
+    def get_board_info(self):
+        return self.width, self.height, self.board.start_ships
 
     def animate(self):
         os.system("clear")
