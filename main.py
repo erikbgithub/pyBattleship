@@ -5,6 +5,8 @@ VERSION = "0.2"
 
 import argparse
 from time import time
+from numpy import zeros
+import matplotlib.pyplot as plt
 
 import distributors
 import strategies
@@ -49,10 +51,8 @@ if __name__ == "__main__":
     if args.print_game:
         g.prepare()
         g.play()
-        print g
     else:
         s = Statistics(g)
-
         t = time()
 
         if not args.no_multi_process:
@@ -60,6 +60,10 @@ if __name__ == "__main__":
         else:
             s.run(args.count)
 
+        blubb = zeros(101)
+        for x in s.results: blubb[x[1]] += 1
+        plt.plot(blubb)
+        plt.show()
         print s
 
         print
