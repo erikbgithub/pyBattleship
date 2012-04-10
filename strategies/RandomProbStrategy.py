@@ -18,24 +18,20 @@ class RandomProbStrategy(AbstractStrategy):
 
     def prepare(self):
         self.probability_map = [1] * (self.width * self.height)
-        self.action_map = [FIELD.UNKNOWN] * (self.width * self.height)
 
     def get_move(self):
         #move
         max_val = max(self.probability_map)
         max_pos = [i for i, j in enumerate(self.probability_map) if j == max_val]
         pos = choice(max_pos)
-        while self.action_map[pos] in (FIELD.HIT, FIELD.MISS):
+        x = pos // self.width
+        y = pos % self.width
+
+        while self.get_field_info(x,y) != FIELD.UNKNOWN:
             del max_pos[pos]
             pos = choice(max_pos)
 
-        x = pos // self.width
-        y = pos % self.width
 
         move, field = self.evaluate(x, y)
         #update local state
         self.probability_map[pos] = 0
-        if move == MOVE.OK:
-            self.action_map[pos] = field
-        elif move == MOVE.OLD:
-            pass
