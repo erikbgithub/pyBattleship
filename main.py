@@ -33,6 +33,8 @@ if __name__ == "__main__":
         help='Play one Game and print the board')
     parser.add_argument('--animate-game', default=False, action='store_true',
         help='Play one Game and animate it')
+    parser.add_argument('--steps', default=False, action='store_true',
+        help='Step through moves when animating game')
     parser.add_argument('--plot-results', default=False, action='store_true',
         help='Plot the results with numpy')
     parser.add_argument('--no-multi-process', default=False, action='store_true',
@@ -57,7 +59,7 @@ if __name__ == "__main__":
     elif args.animate_game:
         g.prepare()
         try:
-            g.play(True)
+            g.play(True, args.steps)
         except KeyboardInterrupt:
             pass
     else:
