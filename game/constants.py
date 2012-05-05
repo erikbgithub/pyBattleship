@@ -18,6 +18,11 @@ class MOVE:
     OLD = 2
     OK = 4
 
+moves = {
+        MOVE.ILLEGAL : 'illegal',
+        MOVE.OLD : 'old',
+        MOVE.OK : 'ok'
+}
 
 class STATE:
     STARTING = 1

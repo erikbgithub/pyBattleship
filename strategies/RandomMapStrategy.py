@@ -8,7 +8,7 @@ from AbstractStrategy import AbstractStrategy
 
 N = 10000
 
-class RandomProbStrategy(AbstractStrategy):
+class RandomMapStrategy(AbstractStrategy):
     """
     The main strategy is to have a map as big as the gameboard and set each
     field to value relative to it's likelyhood of containing a ship.
