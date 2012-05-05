@@ -93,10 +93,12 @@ class Board:
         return pos % self.width
 
     def print_board(self):
-        s = "-" * (self.width * 2 + 1) + "\n"
-        s += "\n".join("|%s|" % " ".join(symbols[p] for p in self.field[row * self.width: (row + 1) * self.width])
-        for row in xrange(self.height))
-        s += "\n" + "-" * (self.width * 2 + 1)
+        s = "  " + "-" * (self.width * 2 + 1) + "\n"
+        s += "\n".join(
+            "%d |%s|" % (row, " ".join(symbols[p] for p in self.field[row * self.width: (row + 1) * self.width]))
+                for row in xrange(self.height))
+        s += "\n  " + "-" * (self.width * 2 + 1)
+        s += "\n   " + " ".join(str(i) for i in xrange(10))
 
         return s
 

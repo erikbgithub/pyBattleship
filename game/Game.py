@@ -42,7 +42,7 @@ class Game:
         self.destroyed = 0
 
 
-    def play(self, animate=False):
+    def play(self, animate=False, step=False):
         # not all available ships were placed onto board
         if self.board.free_ships:
             self.state = STATE.INVALID
@@ -55,6 +55,15 @@ class Game:
         while True:
             self.on_turn = True
 
+            if animate:
+                print "\033[0;0H" # clean board and 5 additional lines
+                n = self.__str__().count("\n")
+                for line in range(n + 7):
+                    print " " * 80
+
+                # jump back to cursor under board
+                print "\033[%d;0H" % (n + 2)
+
             try:
                 self.player.get_move()
             except:
@@ -66,7 +75,10 @@ class Game:
                 # set cursor to line 0
                 print "\033[0;0H"
                 print self
-                sleep(0.25)
+                if step:
+                    raw_input()
+                else:
+                    sleep(0.25)
 
             if self.destroyed == len(self.board.start_ships):
                 self.state = STATE.WON
